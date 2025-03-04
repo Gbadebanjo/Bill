@@ -41,6 +41,12 @@ export default function HomeScreen() {
       <Pressable onPress={() => router.push('/screen/Statement')} style={styles.info}>
         <Text>Statement</Text>
       </Pressable>
+      <Pressable onPress={() => router.push('/screen/PrivacyPolicy')} style={styles.info}>
+        <Text>Privacy Policy</Text>
+      </Pressable>
+      <Pressable onPress={() => router.push('/screen/HelpCenter')} style={styles.info}>
+        <Text>Help Center</Text>
+      </Pressable>
 
     </ParallaxScrollView>
   );
