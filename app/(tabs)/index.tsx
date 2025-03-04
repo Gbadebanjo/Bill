@@ -47,7 +47,12 @@ export default function HomeScreen() {
       <Pressable onPress={() => router.push('/screen/HelpCenter')} style={styles.info}>
         <Text>Help Center</Text>
       </Pressable>
-
+      <Pressable onPress={() => router.push('/screen/CustomerService')} style={styles.info}>
+        <Text>Customer Service</Text>
+      </Pressable>
+      <Pressable onPress={() => router.push('/screen/SupportTicket')} style={styles.info}>
+        <Text>Support Ticket</Text>
+      </Pressable>
     </ParallaxScrollView>
   );
 }

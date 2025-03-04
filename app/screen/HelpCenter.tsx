@@ -8,7 +8,7 @@ import HeadingField from '@/components/Header';
 
 const FAQScreen = () => {
   const [search, setSearch] = useState('');
-  const [expandedIndex, setExpandedIndex] = useState(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const navigation = useNavigation();
 
   const faqData = [
@@ -19,14 +19,15 @@ const FAQScreen = () => {
   ];
 
   return (
-    <View style={{ flex: 1, padding: 16 }}>
+    <View style={{ flex: 1  }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderRadius: 8, padding: 8 }}>
         <Ionicons name="search" size={20} color="gray" style={{ marginRight: 8 }} />
         <TextInput
           placeholder="Search"
           value={search}
           onChangeText={setSearch}
-          style={{ flex: 1 }}
+          style={styles.input}
+          placeholderTextColor={'gray'}
         />
       </View>
       <FlatList
@@ -36,7 +37,10 @@ const FAQScreen = () => {
           <TouchableOpacity
             onPress={() => setExpandedIndex(expandedIndex === index ? null : index)}
             style={{ backgroundColor: '#f8f8f8', padding: 16, marginTop: 8, borderRadius: 8 }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={{ fontWeight: 'bold' }}>{item.question}</Text>
+            <Ionicons name={expandedIndex === index ? 'chevron-up' : 'chevron-down'} size={20} color="black" />
+            </View>
             {expandedIndex === index && <Text style={{ marginTop: 8 }}>{item.answer}</Text>}
           </TouchableOpacity>
         )}
@@ -46,13 +50,13 @@ const FAQScreen = () => {
 };
 
 const ContactScreen = () => {
-  const contactOptions = [
-    { id: '1', title: 'Customer Service', icon: 'headset' },
-    { id: '2', title: 'Support Ticket', icon: 'headset' },
+  const contactOptions: { id: string; title: string; icon: keyof typeof Ionicons.glyphMap }[] = [
+    { id: '1', title: 'Customer Service', icon: 'call' },
+    { id: '2', title: 'Support Ticket', icon: 'document-text' },
   ];
 
   return (
-    <View style={{ flex: 1, padding: 16 }}>
+    <View style={{ flex: 1}}>
       <FlatList
         data={contactOptions}
         keyExtractor={(item) => item.id}
@@ -73,13 +77,15 @@ export default function HelpCenter() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Tab Buttons */}
-      <HeadingField title="Help Center" onPress={() => navigation.goBack()} />
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 16 }}>
+      <HeadingField title="Help Center"  />
+      <View style={styles.contactContainer}>
         <TouchableOpacity
           onPress={() => setSelectedTab('FAQ')}
           style={{
             padding: 12,
             borderBottomWidth: 2,
+            width: '47%',
+            alignItems: 'center',
             borderBottomColor: selectedTab === 'FAQ' ? 'black' : 'transparent'
           }}>
           <Text style={{ fontWeight: 'bold', color: selectedTab === 'FAQ' ? 'black' : 'gray' }}>FAQ</Text>
@@ -89,6 +95,8 @@ export default function HelpCenter() {
           style={{
             padding: 12,
             borderBottomWidth: 2,
+            width: '47%',
+            alignItems: 'center',
             borderBottomColor: selectedTab === 'Contact' ? 'black' : 'transparent'
           }}>
           <Text style={{ fontWeight: 'bold', color: selectedTab === 'Contact' ? 'black' : 'gray' }}>Contact Us</Text>
@@ -107,5 +115,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingTop: 20,
         paddingHorizontal: 20,
+        justifyContent: 'space-between',
+    },
+    contactContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginBottom: 30,
+    },
+    input: {
+        flex: 1,
+        padding: 0,
+        fontSize: 16,
+        
     },
     });
